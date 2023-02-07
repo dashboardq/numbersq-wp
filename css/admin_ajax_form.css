@@ -1,0 +1,16 @@
+.ajax_form .form-table input[type=text] {
+	width: 100%;
+	max-width: 500px;
+	margin-bottom: 6px;
+}
+
+.ajax_form .form-table textarea {
+	width: 100%;
+	max-width: 500px;
+	height: 150px;
+	margin-bottom: 6px;
+}
+
+.ajax_form .spinner {
+	float: none;
+}
