@@ -44,12 +44,12 @@ class NumbersQ_Numbers_List_Table extends WP_List_Table {
         if(class_exists('WooCommerce')) {
             $data[] = [
                 'number' => 'Total WooCommerce Orders',
-                'value' => NumbersQ_Data_Woo_Orders::output('all', '', '', 'value')['value'],
+                'value' => number_format(NumbersQ_Data_Woo_Orders::output('all', '', '', 'value')['value']),
             ];
 
             $data[] = [
                 'number' => 'Total WooCommerce Products',
-                'value' => NumbersQ_Data_Woo_Products::output('all', '', '', 'value')['value'],
+                'value' => number_format(NumbersQ_Data_Woo_Products::output('all', '', '', 'value')['value']),
             ];
 
             $data[] = [
@@ -63,13 +63,13 @@ class NumbersQ_Numbers_List_Table extends WP_List_Table {
             ];
 
             $data[] = [
-                'number' => 'Total Repeat Customers Orders',
-                'value' => NumbersQ_Data_Woo_Orders_Repeat::output('all', '', '', 'value')['value'],
+                'number' => 'Total Repeat Customer Orders',
+                'value' => number_format(NumbersQ_Data_Woo_Orders_Repeat::output('all', '', '', 'value')['value']),
             ];
 
             $data[] = [
                 'number' => 'Total WooCommerce International Orders',
-                'value' => NumbersQ_Data_Woo_Orders_International::output('all', '', '', 'value')['value'],
+                'value' => number_format(NumbersQ_Data_Woo_Orders_International::output('all', '', '', 'value')['value']),
             ];
 
             $data[] = [
@@ -80,22 +80,22 @@ class NumbersQ_Numbers_List_Table extends WP_List_Table {
 
         $data[] = [
             'number' => 'Total WordPress Comments',
-            'value' => NumbersQ_Data_WP_Comments::output('all', '', '', 'value')['value'],
+            'value' => number_format(NumbersQ_Data_WP_Comments::output('all', '', '', 'value')['value']),
         ];
 
         $data[] = [
             'number' => 'Total WordPress Pages',
-            'value' => NumbersQ_Data_WP_Pages::output('all', '', '', 'value')['value'],
+            'value' => number_format(NumbersQ_Data_WP_Pages::output('all', '', '', 'value')['value']),
         ];
 
         $data[] = [
             'number' => 'Total WordPress Posts',
-            'value' => NumbersQ_Data_WP_Posts::output('all', '', '', 'value')['value'],
+            'value' => number_format(NumbersQ_Data_WP_Posts::output('all', '', '', 'value')['value']),
         ];
 
         $data[] = [
             'number' => 'Total WordPress Users',
-            'value' => NumbersQ_Data_WP_Users::output('all', '', '', 'value')['value'],
+            'value' => number_format(NumbersQ_Data_WP_Users::output('all', '', '', 'value')['value']),
         ];
 
         $data = apply_filters('numbersq_list', $data);

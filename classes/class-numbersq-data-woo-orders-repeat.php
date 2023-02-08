@@ -24,16 +24,11 @@ class NumbersQ_Data_Woo_Orders_Repeat {
             WHERE p.post_type = 'shop_order'
             AND p.post_status IN ('wc-processing','wc-completed')
             AND p.ID IN (
-                SELECT pm.post_id
+                SELECT CAST(GROUP_CONCAT(post_id) AS UNSIGNED) 
                 FROM {$wpdb->prefix}postmeta pm
-                WHERE pm.meta_key = '_billing_email' 
-                AND pm.meta_value IN (
-                    SELECT meta_value 
-                    FROM {$wpdb->prefix}postmeta 
-                    WHERE meta_key = '_billing_email' 
-                    GROUP BY meta_value 
-                    HAVING COUNT(post_id) > 1
-                )
+                WHERE meta_key = '_billing_email' 
+                GROUP BY meta_value 
+                HAVING COUNT(post_id) > 1
             )
         ");
 
@@ -65,16 +60,11 @@ class NumbersQ_Data_Woo_Orders_Repeat {
             AND {$ts_start} <= UNIX_TIMESTAMP(p.post_date)
             AND UNIX_TIMESTAMP(p.post_date) <= {$ts_end}
             AND p.ID IN (
-                SELECT pm.post_id
+                SELECT CAST(GROUP_CONCAT(post_id) AS UNSIGNED) 
                 FROM {$wpdb->prefix}postmeta pm
-                WHERE pm.meta_key = '_billing_email' 
-                AND pm.meta_value IN (
-                    SELECT meta_value 
-                    FROM {$wpdb->prefix}postmeta 
-                    WHERE meta_key = '_billing_email' 
-                    GROUP BY meta_value 
-                    HAVING COUNT(post_id) > 1
-                )
+                WHERE meta_key = '_billing_email' 
+                GROUP BY meta_value 
+                HAVING COUNT(post_id) > 1
             )
         ");
 

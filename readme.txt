@@ -15,7 +15,7 @@ Provides overall stats and numbers for your site and also provides the ability t
 
 == Description ==
 
-The NumbersQ plugin provides a simple page that gives you a quick overview of the status of your WordPress site and the overall stats of your WooCommerce store if you have WooCommerce installed.
+The NumbersQ plugin provides a simple page that gives you a quick overview of the stats for your WordPress site and the overall stats of your WooCommerce store if you have WooCommerce installed.
 
 This plugin allows for the creation of a connection key that can be used on [NumbersQ.com](https://www.numbersq.com) to pull in numbers and make calculations on the stats for your site and store. NumbersQ also provides additional options like the ability to pull data from specific date ranges or combine the data with other 3rd party stats.
 
@@ -28,7 +28,7 @@ Be careful to keep the NumbersQ keys private. Anyone with access to the keys wil
 2. Login to the Wordpress admin panel and go to the the plugins page. On the plugins page, activate the NumbersQ plugin.
 3. Navigate to the NumbersQ > Numbers page to see the overall stats for the site.
 4. To connect the site to NumbersQ.com, go to the NumbersQ > Keys page and press the "Add New" button.
-5. Copy the key and use it when setting up a WordPress number on NumbersQ.com.
+5. Copy the key and use it when setting up a WordPress connection on NumbersQ.com.
 
 == Changelog ==
 
