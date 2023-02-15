@@ -214,7 +214,7 @@ class NumbersQ_Column {
         function wpParseQuery($query) {
 		 if(is_admin() && $query->query['post_type'] == $this->full_key && isset($_GET[$this->filter_type])) {
 
-			 $key = $_GET[$this->filter_type];
+			 $key = sanitize_text_field($_GET[$this->filter_type]);
 			 if(isset($this->filter_keys[$key]) && (in_array($this->filter_keys[$key], $this->filters) || in_array($this->filter_keys[$key], $this->filter_values))) {
 				 $query->query_vars['meta_key'] = $this->filter_type;
 				 $query->query_vars['meta_value'] = $this->filter_keys[$key];

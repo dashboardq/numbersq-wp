@@ -139,7 +139,11 @@ class NumbersQ_Type {
 				$css .= "#posts-filter .search-box { display: none; } \n";
 			}
 			$css .= "</style>\n";
-			echo $css;
+
+            $allowed_html = [
+                'style' => [],
+            ];
+			echo wp_kses($css, $allowed_html);
 		}
 	}
 
@@ -211,7 +215,7 @@ class NumbersQ_Type {
 <div class="submitbox" id="submitpost">
          <div id="major-publishing-actions" style="background: transparent; border: 0;">
                  <div id="publishing-action">    
-			 <a href="edit.php?post_type=<?php echo $post->post_type; ?>" class="button button-primary button-large">Back</a>
+			 <a href="edit.php?post_type=<?php echo esc_url($post->post_type); ?>" class="button button-primary button-large">Back</a>
                  </div>
                  <div class="clear"></div>       
          </div>
@@ -614,7 +618,7 @@ class NumbersQ_Type {
 
 		$html = apply_filters('agraddy_cpt_details', $html);
 
-		echo $html;
+		echo wp_kses_post($html);
 	}
 
 	function wpMetaSave() {
@@ -645,7 +649,7 @@ class NumbersQ_Type {
                         <?php endif; ?>                 
       
                         <?php foreach($redirect_info as  $key => $val): ?>
-                        <input type="hidden" name="redirect_<?php echo $key; ?>" value="<?php echo $val; ?>" />
+                        <input type="hidden" name="redirect_<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($val); ?>" />
                         <?php endforeach; ?>            
                  </div>
                  <div class="clear"></div>       
@@ -700,7 +704,7 @@ class NumbersQ_Type {
 					// Make sure only checks once
 					array_push($found, $item->key);
 				} elseif(isset($_POST[$item->key . '_count']) && $item->type == 'radio' && !in_array($item->key, $found)) {
-					$count = $_POST[$item->key . '_count'];
+					$count = sanitize_text_field($_POST[$item->key . '_count']);
 					$output = [];
 					for($j = 0; $j < $count; $j++) {
 						if(isset($_POST[$item->key . '_' . $j])) {
@@ -714,7 +718,7 @@ class NumbersQ_Type {
 					// Make sure only checks once (radios are listed multiple times)
 					array_push($found, $item->key);
 				} elseif(isset($_POST[$item->key . '_count']) && $item->type == 'checkbox') {
-					$count = $_POST[$item->key . '_count'];
+					$count = sanitize_text_field($_POST[$item->key . '_count']);
 					//echo $count;die;
 					$output = [];
 					for($j = 0; $j < $count; $j++) {
@@ -740,7 +744,7 @@ class NumbersQ_Type {
 
 			if(isset($this->title_key) && isset($this->title_fn) && isset($_POST[$this->title_key])) {
 				$fn = $this->title_fn;
-				$title = $fn($_POST[$this->title_key]);
+				$title = $fn(sanitize_text_field($_POST[$this->title_key]));
 				$where = array( 'ID' => $post_id );
 				$wpdb->update( $wpdb->posts, array( 'post_title' => $title ), $where );
 			}
