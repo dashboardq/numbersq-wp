@@ -52,13 +52,13 @@ class NumbersQ_Data_Woo_Orders_Repeat {
 
         // Inspired by: 
         // https://stackoverflow.com/questions/51152861/get-orders-total-purchases-amount-for-the-day-in-woocommerce
-        $value = $wpdb->get_var("
+        $value = $wpdb->get_var($wpdb->prepare("
             SELECT COUNT(id)
             FROM {$wpdb->prefix}posts as p
             WHERE p.post_type = 'shop_order'
             AND p.post_status IN ('wc-processing','wc-completed')
-            AND {$ts_start} <= UNIX_TIMESTAMP(p.post_date)
-            AND UNIX_TIMESTAMP(p.post_date) <= {$ts_end}
+            AND %s <= UNIX_TIMESTAMP(p.post_date)
+            AND UNIX_TIMESTAMP(p.post_date) <= %s
             AND p.ID IN (
                 SELECT CAST(GROUP_CONCAT(post_id) AS UNSIGNED) 
                 FROM {$wpdb->prefix}postmeta pm
@@ -66,7 +66,7 @@ class NumbersQ_Data_Woo_Orders_Repeat {
                 GROUP BY meta_value 
                 HAVING COUNT(post_id) > 1
             )
-        ");
+        ", $ts_start, $ts_end));
 
         if(!$value) {
             $value = 0;

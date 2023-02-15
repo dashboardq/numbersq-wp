@@ -176,7 +176,7 @@ class NumbersQ_Column {
 			$output = $fn($output);
 		}
 
-		echo $output;
+		echo wp_kses_post($output);
 	}
 
 	function wpInit() {

@@ -20,8 +20,10 @@ class NumbersQ_Data_Woo_Revenue_International {
 
         $country_code = WC()->countries->get_base_country();
 
+        // SUM does not handle this data well.
+        // https://stackoverflow.com/questions/3907021/using-sum-on-float-data
         $value = $wpdb->get_var($wpdb->prepare("
-            SELECT SUM(pm.meta_value)
+            SELECT ROUND(SUM(pm.meta_value), 2)
             FROM {$wpdb->prefix}posts as p
             INNER JOIN {$wpdb->prefix}postmeta as pm ON p.ID = pm.post_id
             INNER JOIN {$wpdb->prefix}postmeta as pm2 ON p.ID = pm2.post_id
@@ -54,19 +56,21 @@ class NumbersQ_Data_Woo_Revenue_International {
 
         // Inspired by: 
         // https://stackoverflow.com/questions/51152861/get-orders-total-purchases-amount-for-the-day-in-woocommerce
+        // SUM does not handle this data well.
+        // https://stackoverflow.com/questions/3907021/using-sum-on-float-data
         $value = $wpdb->get_var($wpdb->prepare("
-            SELECT SUM(pm.meta_value)
+            SELECT ROUND(SUM(pm.meta_value), 2)
             FROM {$wpdb->prefix}posts as p
             INNER JOIN {$wpdb->prefix}postmeta as pm ON p.ID = pm.post_id
             INNER JOIN {$wpdb->prefix}postmeta as pm2 ON p.ID = pm2.post_id
             WHERE p.post_type = 'shop_order'
             AND p.post_status IN ('wc-processing','wc-completed')
-            AND {$ts_start} <= UNIX_TIMESTAMP(p.post_date)
-            AND UNIX_TIMESTAMP(p.post_date) <= {$ts_end}
+            AND %s <= UNIX_TIMESTAMP(p.post_date)
+            AND UNIX_TIMESTAMP(p.post_date) <= %s
             AND pm.meta_key = '_order_total'
             AND pm2.meta_key = '_billing_country'
             AND pm2.meta_value != %s
-        ", $country_code));
+        ", $ts_start, $ts_end, $country_code));
 
         if(!$value) {
             $value = 0;

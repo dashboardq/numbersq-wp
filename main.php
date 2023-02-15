@@ -5,7 +5,7 @@ Description: Provides a connection between WordPress and NumbersQ.com.
 Author: Anthony Graddy
 Author URI: https://www.dashboardq.com
 Plugin URI: https://github.com/dashboardq/numbersq-wp
-Version: 1.0.0
+Version: 1.0.2
 */
 
 defined('ABSPATH') || exit;
@@ -35,7 +35,7 @@ require_once(__DIR__ . '/classes/class-numbersq-data-wp-users.php');
 class NumbersQ {
 	public $key = 'numbersq';
 	public $key_ = 'numbersq_';
-	public $version = '1.0.0';
+	public $version = '1.0.2';
 
 	public $cpt;
 	public $numbersq;
@@ -241,8 +241,8 @@ class NumbersQ {
             && in_array($_GET['type'], $types)
             && $validated
         ) {
-            $key = $_GET['key'];
-            $type = $_GET['type'];
+            $key = sanitize_text_field($_GET['key']);
+            $type = sanitize_text_field($_GET['type']);
 
             $parts = explode('_', $key);
             if(isset($parts[1]) && is_numeric($parts[1])) {

@@ -18,8 +18,10 @@ class NumbersQ_Data_Woo_Revenue {
 	public static function all() {
         global $wpdb;
 
+        // SUM does not handle this data well.
+        // https://stackoverflow.com/questions/3907021/using-sum-on-float-data
         $value = $wpdb->get_var("
-            SELECT SUM(pm.meta_value)
+            SELECT ROUND(SUM(pm.meta_value), 2)
             FROM {$wpdb->prefix}posts as p
             INNER JOIN {$wpdb->prefix}postmeta as pm ON p.ID = pm.post_id
             WHERE p.post_type = 'shop_order'
@@ -47,16 +49,18 @@ class NumbersQ_Data_Woo_Revenue {
 
         // Inspired by: 
         // https://stackoverflow.com/questions/51152861/get-orders-total-purchases-amount-for-the-day-in-woocommerce
-        $value = $wpdb->get_var("
-            SELECT SUM(pm.meta_value)
+        // SUM does not handle this data well.
+        // https://stackoverflow.com/questions/3907021/using-sum-on-float-data
+        $value = $wpdb->get_var($wpdb->prepare("
+            SELECT ROUND(SUM(pm.meta_value), 2)
             FROM {$wpdb->prefix}posts as p
             INNER JOIN {$wpdb->prefix}postmeta as pm ON p.ID = pm.post_id
             WHERE p.post_type = 'shop_order'
             AND p.post_status IN ('wc-processing','wc-completed')
-            AND {$ts_start} <= UNIX_TIMESTAMP(p.post_date)
-            AND UNIX_TIMESTAMP(p.post_date) <= {$ts_end}
+            AND %s <= UNIX_TIMESTAMP(p.post_date)
+            AND UNIX_TIMESTAMP(p.post_date) <= %s
             AND pm.meta_key = '_order_total'
-        ");
+        ", $ts_start, $ts_end));
 
         if(!$value) {
             $value = 0;

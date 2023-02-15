@@ -1,4 +1,4 @@
-<div class="wrap admin_tool_basic_page" id="<?php echo $action; ?>_page">
+<div class="wrap admin_tool_basic_page" id="<?php echo esc_attr($action); ?>_page">
 	<h1 class="wp-heading-inline"><?php echo esc_html($title); ?></h1>
 
         <?php if(isset($_GET['msg']) && $_GET['msg'] == 'success'): ?>
@@ -11,7 +11,7 @@
 
         <form action="admin-ajax.php" method="post" class="ajax_form">
             <?php wp_nonce_field( $action ); ?>
-                <input name="action" type="hidden" value="<?php echo $action; ?>" />
+                <input name="action" type="hidden" value="<?php echo esc_attr($action); ?>" />
 
                 <table class="form-table">
                     <tbody>
@@ -20,7 +20,12 @@
                             <td>
                                 <select name="timezone_string">
                                     <option value="use_wordpress" <?php echo ($timezone_string == 'use_wordpress') ? 'selected' : ''; ?>>Use WordPress Setting</option>
-                                    <?php echo preg_replace('/<option selected="selected" value="">.*<\/option>/', '', wp_timezone_choice(($timezone_string == 'use_wordpress') ? '' : $timezone_string)); ?>
+                                    <?php 
+                                        // Remove the default empty value selection value from the list.
+                                        // Have the drop down either select the '' value if "use_wordpress"
+                                        // is passed in or use the $timezone_string that was previously selected.
+                                        echo preg_replace('/<option selected="selected" value="">.*<\/option>/', '', wp_timezone_choice(($timezone_string == 'use_wordpress') ? '' : $timezone_string)); 
+                                    ?>
                                 </select>
                                 <p class="description"></p>
                             </td>
