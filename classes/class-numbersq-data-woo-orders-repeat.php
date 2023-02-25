@@ -57,8 +57,8 @@ class NumbersQ_Data_Woo_Orders_Repeat {
             FROM {$wpdb->prefix}posts as p
             WHERE p.post_type = 'shop_order'
             AND p.post_status IN ('wc-processing','wc-completed')
-            AND %s <= UNIX_TIMESTAMP(p.post_date)
-            AND UNIX_TIMESTAMP(p.post_date) <= %s
+            AND %s <= UNIX_TIMESTAMP(p.post_date_gmt)
+            AND UNIX_TIMESTAMP(p.post_date_gmt) <= %s
             AND p.ID IN (
                 SELECT CAST(GROUP_CONCAT(post_id) AS UNSIGNED) 
                 FROM {$wpdb->prefix}postmeta pm

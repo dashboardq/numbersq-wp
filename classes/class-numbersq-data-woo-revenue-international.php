@@ -65,8 +65,8 @@ class NumbersQ_Data_Woo_Revenue_International {
             INNER JOIN {$wpdb->prefix}postmeta as pm2 ON p.ID = pm2.post_id
             WHERE p.post_type = 'shop_order'
             AND p.post_status IN ('wc-processing','wc-completed')
-            AND %s <= UNIX_TIMESTAMP(p.post_date)
-            AND UNIX_TIMESTAMP(p.post_date) <= %s
+            AND %s <= UNIX_TIMESTAMP(p.post_date_gmt)
+            AND UNIX_TIMESTAMP(p.post_date_gmt) <= %s
             AND pm.meta_key = '_order_total'
             AND pm2.meta_key = '_billing_country'
             AND pm2.meta_value != %s

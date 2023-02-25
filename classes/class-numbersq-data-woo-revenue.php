@@ -57,8 +57,8 @@ class NumbersQ_Data_Woo_Revenue {
             INNER JOIN {$wpdb->prefix}postmeta as pm ON p.ID = pm.post_id
             WHERE p.post_type = 'shop_order'
             AND p.post_status IN ('wc-processing','wc-completed')
-            AND %s <= UNIX_TIMESTAMP(p.post_date)
-            AND UNIX_TIMESTAMP(p.post_date) <= %s
+            AND %s <= UNIX_TIMESTAMP(p.post_date_gmt)
+            AND UNIX_TIMESTAMP(p.post_date_gmt) <= %s
             AND pm.meta_key = '_order_total'
         ", $ts_start, $ts_end));
 
