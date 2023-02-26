@@ -2,7 +2,7 @@
 
 defined('ABSPATH') || exit;
 
-class NumbersQ_Data_Woo_Orders_International {
+class NumbersQ_Data_Test {
 	public static function output($range, $start, $end) {
         global $numbersQ;
 
@@ -16,8 +16,6 @@ class NumbersQ_Data_Woo_Orders_International {
 	}
 
 	public static function all() {
-        $country_code = WC()->countries->get_base_country();
-
         // Uses total from the paginate response to get the actual number.
         $items = wc_get_orders([
             'type' => 'shop_order',
@@ -25,9 +23,6 @@ class NumbersQ_Data_Woo_Orders_International {
             'limit' => 10,
             'return' => 'ids',
             'paginate' => true,
-            'meta_key'     => '_billing_country',
-            'meta_compare' => '!=',
-            'meta_value' => $country_code,
         ]);
 
         $output = [];
@@ -39,9 +34,7 @@ class NumbersQ_Data_Woo_Orders_International {
     }
 
 	public static function filter($start, $end) {
-        global $numbersQ;
-
-        $country_code = WC()->countries->get_base_country();
+        global $numbersQ, $wpdb;
 
         $ts_start = $numbersQ->getTimestamp($start);
         $ts_end = $numbersQ->getTimestamp($end);
@@ -54,9 +47,6 @@ class NumbersQ_Data_Woo_Orders_International {
             'return' => 'ids',
             'date_created' => $ts_start . '...' . $ts_end,
             'paginate' => true,
-            'meta_key'     => '_billing_country',
-            'meta_compare' => '!=',
-            'meta_value' => $country_code,
         ]);
 
         $output = [];

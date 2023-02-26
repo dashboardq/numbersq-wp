@@ -16,8 +16,10 @@ class NumbersQ_Data_Woo_Orders {
 	}
 
 	public static function all() {
-        // Uses total from the paginate resonse to get the actual number.
+        // Uses total from the paginate response to get the actual number.
         $items = wc_get_orders([
+            'type' => 'shop_order',
+            'status' => ['wc-processing', 'wc-completed'],
             'limit' => 10,
             'return' => 'ids',
             'paginate' => true,
@@ -37,8 +39,10 @@ class NumbersQ_Data_Woo_Orders {
         $ts_start = $numbersQ->getTimestamp($start);
         $ts_end = $numbersQ->getTimestamp($end);
 
-        // Uses total from the paginate resonse to get the actual number.
+        // Uses total from the paginate response to get the actual number.
         $items = wc_get_orders([
+            'type' => 'shop_order',
+            'status' => ['wc-processing', 'wc-completed'],
             'limit' => 10,
             'return' => 'ids',
             'date_created' => $ts_start . '...' . $ts_end,

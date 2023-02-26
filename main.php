@@ -5,7 +5,7 @@ Description: Provides a connection between WordPress and NumbersQ.com.
 Author: Anthony Graddy
 Author URI: https://www.dashboardq.com
 Plugin URI: https://github.com/dashboardq/numbersq-wp
-Version: 1.0.5
+Version: 1.1.0
 */
 
 defined('ABSPATH') || exit;
@@ -18,6 +18,8 @@ if(is_admin()) {
 require_once(__DIR__ . '/classes/class-numbersq-column.php');
 require_once(__DIR__ . '/classes/class-numbersq-cpt.php');
 require_once(__DIR__ . '/classes/class-numbersq-type.php');
+
+require_once(__DIR__ . '/classes/class-numbersq-data-test.php');
 
 require_once(__DIR__ . '/classes/class-numbersq-data-woo-orders-international.php');
 require_once(__DIR__ . '/classes/class-numbersq-data-woo-orders-repeat.php');
@@ -35,7 +37,7 @@ require_once(__DIR__ . '/classes/class-numbersq-data-wp-users.php');
 class NumbersQ {
 	public $key = 'numbersq';
 	public $key_ = 'numbersq_';
-	public $version = '1.0.5';
+	public $version = '1.1.0';
 
 	public $cpt;
 	public $numbersq;
@@ -189,6 +191,7 @@ class NumbersQ {
         $pass = false;
 
         $types = [
+            'test',
             'woo_orders_international',
             'woo_orders_repeat',
             'woo_orders',
@@ -204,6 +207,7 @@ class NumbersQ {
         $types = apply_filters('numbersq_types', $types, sanitize_text_field($_GET['type']));
 
         $funcs = [
+            'test' => ['NumbersQ_Data_Test', 'output'],
             'woo_orders_international' => ['NumbersQ_Data_Woo_Orders_International', 'output'],
             'woo_orders_repeat' => ['NumbersQ_Data_Woo_Orders_Repeat', 'output'],
             'woo_orders' => ['NumbersQ_Data_Woo_Orders', 'output'],
